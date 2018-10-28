@@ -1,0 +1,162 @@
+<div class="row">
+  <div class="col-1"></div>
+  <div class="col-8">
+    <div><label>Total savings:</label><span class="indigo">{{totalsavings}}</span></div>
+    <div><label>Savings without specific goals:</label><span class="indigo">{{nongoalsavings}}</span></div>
+    <div><label>Saving for specific goals:</label><span class="indigo">{{goalsavings}}</span></div>
+  
+  <div class="unique-color mt-3">Savings</div>
+  <div class="border border-indigo" >    
+    <table class="table">
+      <thead>
+         <tr>
+          <th>#</th>
+          <th>Goal</th>
+          <th>Progress bar</th>
+          <th >Paid</th>
+          <th>
+            <button type="button" class="close" aria-label="Close" >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+       <tr *ngFor="let save of savings; let i = index">
+         <td>{{i+1}}</td>
+         <td>{{save.name}}</td>
+         <td *ngIf="save.fullfield.iffullfield==false">
+            <progress-bar [progress]="(save.achieved)*100/(save.fullamount)" [color-degaded]="{'0':'#663300', '40':'#666600', '70':'#669933','90':'#66cc33', '95':'#66ff33'}">
+            </progress-bar>
+            {{save.achieved}} / {{save.fullamount}}
+          </td> 
+          <td *ngIf="save.fullfield.iffullfield!==false">
+           Paid {{save.fullamount}}! Last payment {{save.fullfield.date.toString().slice(8,18)}}
+          </td>
+          <td ><button (click)="save[i]==false?save[i]=true:save[i]=false" class="indigo lighten">Pay</button></td>
+          <td *ngIf="toggleEditS==true">
+           <button type="button" class="close" aria-label="Close" data-toggle="modal" data-target="#basicExample" (click)="fr.show();sendSavingIndex(i);">
+             <span aria-hidden="true">&times;</span>
+            </button>
+           </td>
+          <div class="card indigo lighten-3" *ngIf="save[i]==true">
+                 <div class="card-body">
+                    <h4 class="card-title"><a>Pay</a></h4>
+                   <div>
+                      <input mdbInputDirective type="number" [(ngModel)]="amount" id="formAmount" >
+                      <label for="formAmount">Amount</label>
+                  </div>
+                
+                   <button class="btn btn-primary" (click)="add(i);save[i]=false">Add</button>
+
+                  </div>
+                
+                </div>
+            </tr>
+                     
+           </tbody>
+          </table> 
+          <div  mdbModal #fr="mdbModal" class="modal fade top" id="frModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading">Are you sure?</p>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <i class="fa fa-times fa-4x animated rotateIn"></i>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        <a  mdbBtn color="danger" outline="true" class="waves-effect" mdbWavesEffect (click)="accomplishedSaving(); fr.hide()">Succes!</a>
+        <a  mdbBtn color="danger" outline="true" class="waves-effect" mdbWavesEffect (click)="withdrawSaving(); fr.hide()">Withdraw</a>
+        <a type="button" mdbBtn color="danger" class="waves-effect" mdbWavesEffect data-dismiss="modal" (click)="fr.hide()">Exit</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>     
+        </div> 
+  </div>
+  <div class="col-1"></div>
+  <div class="col-2 mt-3">
+    <div id="panel_zarzadzania">
+      <button mdbBtn type="button" color="indigo" class="waves-light float-right" data-toggle="modal" (click)="addGoal.show()" mdbWavesEffect>Add goal</button>
+      <button mdbBtn type="button" color="indigo" class="waves-light float-right" (click)="toggleSearch==false?toggleSearch=true:toggleSearch=false" mdbWavesEffect>Search</button>
+      <button mdbBtn type="button" color="indigo" class="waves-light float-right" (click)="frame2.show()" mdbWavesEffect>Liquidate</button>
+      
+      <div mdbModal #addGoal="mdbModal" class="modal fade right" id="frameModalTop2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content" >
+              <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Add goal</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="addGoal.hide();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div>
+                  
+              </div>
+              <div class="modal-body">
+                  <form [formGroup]="validatingForm" (ngSubmit)="onSubmit()">
+                      <div class="md-form">
+                          <input mdbInputDirective type="text" #savingName id="formName" class="form-control" data-error="It is required" data-success="Everything is okay!" formControlName="savingName">
+                          <label for="formName">Goal</label>
+                      </div>
+                      <div *ngIf="submitted && f.savingName.errors" class="invalidMessage">
+                          <div *ngIf="f.savingName.errors.required">Name is required</div>
+                       </div>
+                      <div class="md-form">
+                          <input mdbInputDirective type="number" #savingAmount id="formAmount" class="form-control" data-error="It is required" data-success="Everything is okay!" formControlName="savingAmount">
+                          <label for="formAmount">Amount</label>
+                      </div>
+                      <div *ngIf="submitted && f.savingAmount.errors" class="invalidMessage">
+                          <div *ngIf="f.savingAmount.errors.required">Amount is required</div>
+                       </div>
+                      
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" *ngIf="f.savingName.valid && f.savingAmount.valid" class="btn btn-primary indigo lighten" (click)="sendSaving(savingName.value,savingAmount.value);addGoal.hide()"mdbWavesEffect>Add Goal</button>
+              </div>
+          </div>
+        </div>
+      </div>
+        <div  class="border-indigo" *ngIf="toggleSearch==true">
+          <span>Search Term</span>
+          <div class="md-form">
+            <input mdbInputDirective [(ngModel)]="searchTerm" type="text" id="searchSavings" class="form-control">
+            <label for="searchSavings"  class="">Search...</label>
+          </div>
+        </div>
+    </div>
+   
+
+</div>
+<!-- upłynnianie środków-->
+<div mdbModal #frame2="mdbModal" class="modal fade right" id="frameModalTop2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Liquidate</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame2.hide();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <label>How much money do you need?</label>
+          <div><input type="number" [(ngModel)]="cash"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-primary indigo lighten" (click)="cashSaving(); frame2.hide()"mdbWavesEffect>Liquidate</button>
+      </div>
+  </div>
+</div>
+</div>

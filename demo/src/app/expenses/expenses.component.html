@@ -1,0 +1,268 @@
+
+<div class="row h-50 mt-2">
+    <div class="col-1"></div>
+    <div class="col-8" id="fixed-expenses">
+        <div class="unique-color">
+          Fixed Expenses
+        </div>
+        <div class="border border-indigo">
+          <div>
+              <table class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>What</th>
+                      <th>Where</th>
+                      <th>Final date</th>
+                      <th>How much</th>
+                      <th *ngIf="toggleEdit==true">Paid</th>
+                      <th *ngIf="toggleEdit==true">
+                          <button type="button" class="close" aria-label="Close" >
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                      <td>Otto</td>
+                      <td >
+                          <button type="button" class="close" aria-label="Close"data-toggle="modal" data-target="#basicExample" (click)="closeFixed.show()">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                      </td>
+                    </tr>
+                   
+                  </tbody>
+                </table>
+                <div mdbModal #closeFixed="mdbModal" class="modal fade top" id="frModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+                    <!--Content-->
+                    <div class="modal-content text-center">
+                      <!--Header-->
+                      <div class="modal-header d-flex justify-content-center">
+                        <p class="heading">Are you sure?</p>
+                      </div>
+                
+                      <!--Body-->
+                      <div class="modal-body">
+                        <i class="fa fa-times fa-4x animated rotateIn"></i>
+                      </div>
+                
+                      <!--Footer-->
+                      <div class="modal-footer flex-center">
+                        <a type="button" mdbBtn color="danger" outline="true" class="waves-effect"
+                          mdbWavesEffect>Yes</a>
+                        <a type="button" mdbBtn color="danger" class="waves-effect" mdbWavesEffect data-dismiss="modal" (click)="frame.hide()">No</a>
+                      </div>
+                    </div>
+                    <!--/.Content-->
+                  </div>
+                </div>
+
+          </div>
+
+        </div>
+        
+    </div>
+    <div class="col-1"></div>
+    <div class="col-2">
+       
+        <button class="btn indigo darken-3 mt-2 w-100 float-right" data-toggle="modal" data-target="#frameModalTop1" (click)="frame.show()">Add</button>
+          <!-- modal tu jest-->
+          <div mdbModal #frame="mdbModal" class="modal fade right" id="frameModalTop1" tabindex="-1" role="dialog" aria-hidden="true">
+           <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Add Fixed Expense</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <form [formGroup]="validatingFormFixed">
+                          <div class="md-form">
+                              <input mdbInputDirective type="text" id="a" #expenseFixedName class="form-control" data-error="It is required" data-success="Everything is okay!" formControlName="expenseFixedName">
+                              <label for="a" >Name</label>
+                          </div>
+                          <div class="md-form">
+                              <input mdbInputDirective type="number" id="b" #amountFixed class="form-control" data-error="It is required" data-success="Everything is okay!" formControlName="expenseFixedAmount">
+                              <label for="b" >Amount</label>
+                          </div>
+                          <div>
+                            <label>Choose your due date</label>
+                             
+                          </div>
+                          <div>
+                            <span>How often is this expense?</span>
+
+                          </div>
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-primary indigo lighten" mdbWavesEffect>Send Expense</button>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <button class="btn indigo darken-3 mt-2 w-100 float-right" (click)="toggleSearch==false?toggleSearch=true:toggleSearch=false; searchMinMax=false;searchText=false" >Szukaj</button>
+        <div  *ngIf="toggleSearch==true">
+             <button class="indigo lighten-3 align-baseline">Show waiting payments</button>
+             <button class="indigo lighten-3 align-baseline" (click)="searchMinMax==false? searchMinMax=true: searchMinMax=false" >Search by value</button>
+             <div *ngIf="searchMinMax==true"class="md-form" >
+                <input type="number" class="form-control" id="numbermin" mdbInputDirective>
+                 <label for="numbermin">Number min</label>
+                 <input type="number" class="form-control" id="numbermax" mdbInputDirective>
+                 <label for="numbermax">Number max</label>
+                 <button class="indigo darken-3">Accept</button>
+              </div>
+              <button class="indigo lighten-3 align-baseline" (click)="searchText==false?searchText=true:searchText=false">Search by term</button>
+              <div *ngIf="searchText==true" style="position:absolute;">
+                  <div class="md-form form-sm">
+                      <input type="text" id="form11" class="form-control" >
+                      <label for="form11" class="disabled">Example label</label>
+                    </div>
+                  <button class="indigo darken-3">Accept</button>
+              </div>
+        </div>
+    </div>
+  </div>
+  
+<div class="row h-50 mt-2">
+    <div class="col-1"></div>
+    <div class="col-8">
+      <div class="unique-color" >
+        Changeable Expenses
+      </div>
+      <div class="border border-indigo" >
+       
+        <table class="table">
+          <thead>
+           <tr>
+            <th>#</th>
+            <th>What</th>
+            
+            <th>Category</th>
+            <th>How much</th>
+            <th>Was it necessary?</th>
+            <th >
+              <button type="button" class="close" aria-label="Close" >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+            <tr  *ngFor="let change of expensesChangeable | unnecessary, let i = index">
+              <th scope="row">{{i+1}}</th>
+              <td>{{change.name}}</td>
+             
+              <td>{{change.category}}</td>
+              <td>{{change.amount}}</td>
+              <td>{{change.necessary }}</td>
+              <td>
+                <button type="button" class="close" aria-label="Close" data-toggle="modal" data-target="#basicExample" (click)="closeCh.show();sendChangeIndex(i)">
+                   <span aria-hidden="true">&times;</span>
+                </button>
+              </td>
+            </tr>
+                     
+           </tbody>
+          </table>  
+          <div mdbModal #closeCh="mdbModal" class="modal fade top" id="frModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading">Are you sure?</p>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <i class="fa fa-times fa-4x animated rotateIn"></i>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        <a type="button" mdbBtn color="danger" outline="true" class="waves-effect" (click)="deleteExpense();closeCh.hide()"mdbWavesEffect>Yes</a>
+        <a type="button" mdbBtn color="danger" class="waves-effect" mdbWavesEffect data-dismiss="modal" (click)="closeCh.hide()">No</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>    
+        </div> 
+    </div>
+    <div class="col-1"></div>
+    <div class="col-2">
+        <button class="btn indigo darken-3 mt-2 w-100 float-right" data-toggle="modal" data-target="#frameModalTop2" (click)="fr.show()">Add</button>
+        <button class="btn indigo darken-3 mt-2 w-100 float-right" (click)="toggleSearchCh==false?toggleSearchCh=true:toggleSearchCh=false; searchMinMaxCh=false;searchTextCh=false" >Search</button>
+        <div  *ngIf="toggleSearchCh==true" style="position:absolute;">
+            <button class="indigo lighten-3 align-baseline">Show unnecessary</button>
+            <button class="indigo lighten-3 align-baseline" (click)="searchMinMaxCh==false? searchMinMaxCh=true: searchMinMaxCh=false" >Search by value</button>
+            <div *ngIf="searchMinMaxCh==true"class="md-form">
+               <input type="number" class="form-control" id="numbermin" mdbInputDirective>
+                <label for="numbermin">Number min</label>
+                <input type="number" class="form-control" id="numbermax" mdbInputDirective>
+                <label for="numbermax">Number max</label>
+                <button class="indigo darken-3">Accept</button>
+             </div>
+             <button class="indigo lighten-3 align-baseline" (click)="searchTextCh==false?searchTextCh=true:searchTextCh=false">Search by term</button>
+             <div *ngIf="searchTextCh==true">
+                 <div class="md-form form-sm">
+                     <input type="text" id="form11" class="form-control" >
+                     <label for="form11" class="disabled">Example label</label>
+                   </div>
+                 <button class="indigo darken-3">Accept</button>
+             </div>
+   </div>
+        <!-- modal tu jest-->
+        <div mdbModal #fr="mdbModal" class="modal fade right" id="frameModalTop2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Add changeable expense</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="fr.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <form [formGroup]="validatingForm">
+                      <div class="md-form">
+                          <input mdbInputDirective type="text" #expensechname id="formName" class="form-control" data-error="It is required" data-success="Everything is okay!" formControlName="expenseName">
+                          <label for="formName">Name</label>
+                      </div>
+                      <div class="md-form">
+                          <input mdbInputDirective type="number" id="formAmount" #expensechamount class="form-control" data-error="It is required" data-success="Everything is okay!" formControlName="expenseAmount">
+                          <label for="formAmount">Amount</label>
+                      </div>
+                      <div>
+                        <select #catName>
+                          <option *ngFor="let cat of categories">{{cat}}</option>
+                        </select>
+                         </div>
+
+                        <div>Was it necessary?
+                          <input type="checkbox" [(ngModel)]="wasNecessary" [ngModelOptions]="{standalone: true}"><span *ngIf="wasNecessary==true">Yes</span><span *ngIf="wasNecessary==false">No</span>
+                        </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary indigo lighten" (click)="addExpense(expensechname.value,expensechamount.value,catName.value);fr.hide()" mdbWavesEffect>Send Expense</button>
+              </div>
+          </div>
+            </div>
+          </div>
+        </div>
+        
+        
+    
+  </div>
+  

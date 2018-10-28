@@ -1,0 +1,104 @@
+<div class="row">
+  <div class="col-1">
+
+  </div>
+  <div class="col-8 mt-3 border border-indigo">
+    <span class="badge indigo">Total income: {{incomeValue}}</span>
+    <div *ngIf="toggleAddSaving==true">
+      <label>Payment for savings:</label>
+      <input type="number" [(ngModel)]="saveAmount">
+      <button mdbBtn type="button" color="indigo" class="waves-light float-right" (click)="addToSavings();toggleAddSaving=false"  mdbWavesEffect>Save</button>
+      
+    </div>
+    <table>
+      <thead class="indigo">
+        <tr>
+          <th>#</th>
+          <th>What</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th *ngIf="toggleEditI==true">
+            <button type="button" class="close" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+            </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let income of incomes; let i = index ">
+          <td>{{i+1}}</td>
+          <td>{{income.name}}</td>
+          <td>{{income.amount}}</td>
+          <td>{{income.date.toString().slice(4,15)}}</td>
+          <td>
+             <button type="button" class="close" aria-label="Close" data-toggle="modal" data-target="#basicExample" (click)="fr.show(income.id)">
+               <span aria-hidden="true">&times;</span>
+             </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    
+
+<div mdbModal #fr="mdbModal" class="modal fade top" id="frModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading">Are you sure?</p>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <i class="fa fa-times fa-4x animated rotateIn"></i>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        <a  mdbBtn color="danger" outline="true" class="waves-effect"(click)="fr.hide();deleteIncome(1)" mdbWavesEffect>Yes</a>
+        <a type="button" mdbBtn color="danger" class="waves-effect" mdbWavesEffect data-dismiss="modal" (click)="fr.hide()">No</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+  </div>
+  <div class="col-1"></div>
+  <div class="col-2 mt-3">
+      <button mdbBtn type="button" color="indigo" class="waves-light float-right" data-toggle="modal" data-target="#frameModalTop2" (click)="frame.show()" mdbWavesEffect>Add income</button>
+      <div mdbModal #frame="mdbModal" class="modal fade right" id="frameModalTop2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Add income</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <form [formGroup]="validatingForm">
+                      <div class="md-form">
+                          <input mdbInputDirective #incomeName type="text" id="formName" class="form-control" data-error="It is required" data-success="Everything is okay!" formControlName="incomeName">
+                          <label for="formName">Income</label>
+                      </div>
+                      <div class="md-form">
+                          <input mdbInputDirective #incomeNumber type="number" id="formAmount" class="form-control" data-error="It is required" data-success="Everything is okay!" formControlName="incomeAmount">
+                          <label for="formAmount">Amount</label>
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary indigo lighten"  (click)="frame.hide();sendIncome(incomeName.value, incomeNumber.value);"mdbWavesEffect>Send Income</button>
+              </div>
+          </div>
+        </div>
+      </div>
+    
+      <button mdbBtn type="button" color="indigo" class="waves-light float-right" (click)="toggleAddSaving==false?toggleAddSaving=true:toggleAddSaving=false"  mdbWavesEffect>Add to savings</button>
+      
+  </div>
+</div>
+

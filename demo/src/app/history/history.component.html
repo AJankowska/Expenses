@@ -1,0 +1,28 @@
+<div class="col-8 mt-3 border border-indigo">
+  <div>
+    <span class="badge indigo">Your full wallet sorted by date!</span><br>
+    <span>Incomes are green</span><br>
+    <span>Savings are blue</span><br>
+    <span>Fixed expenses are orange</span>
+    <span>Changeable expenses are red</span>
+  </div>
+    <table>
+      <thead class="indigo">
+        <tr>
+          <th>#</th>
+          <th>What</th>
+          <th>Amount</th>
+          <th>Date</th>         
+        </tr>
+      </thead>
+      <tbody *ngIf="fullArray.length!==0">
+        <tr *ngFor="let all of fullArray; let i = index" [ngClass]="{'red':all.hasOwnProperty('necessary'),'orange':all.hasOwnProperty('duedate'),'blue':all.hasOwnProperty('isfullfield'),'green':all.hasOwnProperty('income')}">
+          <td>{{i+1}}</td>
+          <td>{{all.name}}</td>
+          <td>{{all.amount}}</td>
+          <td>{{all.date.toString().slice(4,15)}}</td>
+        
+        </tr>
+      </tbody>
+    </table>
+</div>

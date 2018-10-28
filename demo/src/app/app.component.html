@@ -1,0 +1,51 @@
+
+  
+<div >  
+    <mdb-navbar SideClass="navbar navbar-dark indigo">
+      <mdb-navbar-brand><a class="navbar-brand" routerLink="blank">Navbar</a></mdb-navbar-brand>
+      <mdb-navbar-brand><a class="navbar-brand" routerLink="expenses">Expenses</a></mdb-navbar-brand>
+      <mdb-navbar-brand><a class="navbar-brand" routerLink="savings">Savings</a></mdb-navbar-brand>
+      <mdb-navbar-brand><a class="navbar-brand" routerLink="income">Income</a></mdb-navbar-brand>
+      <mdb-navbar-brand><a class="navbar-brand" routerLink="history">History</a></mdb-navbar-brand>
+     
+  </mdb-navbar>
+ 
+  
+</div>
+<div class="row">
+  <div class="col-2 indigo">
+    <div class="side" id="overviewAccount">
+        <div id="titleOA">Overview account</div>
+        <div class="itemOA">
+          <span >Total income:{{totalIncome}}</span><br>
+        </div>
+        <div clas="itemOA">
+            <span >Total savings: {{totalSavings}}</span><br>
+        </div>
+          
+        <div class="itemOA">
+            <span>Total expenses:{{totalExpenses}}</span><br>
+        </div>
+         
+       
+    </div>
+    <div class="side" >
+        <div id="titleS">Savings</div>
+        <div class="itemS">
+          <span >Last Saving:{{lS}}</span><br>
+        </div>
+        <div class="itemS">
+            <span >Saving almost achieved: {{cTES}}</span><br>
+        </div>
+          
+        <div class="itemS">
+            <span id="itemS">Oldest Saving:{{oS}}</span><br>
+        </div>
+    </div>
+</div>
+  
+  <div class="col-10 all">
+    <router-outlet></router-outlet>
+    
+  </div>
+</div>
